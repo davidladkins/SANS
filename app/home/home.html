@@ -1,0 +1,10 @@
+<div class="container">
+<div text-angular="text-angular" name="htmlcontent" ng-model="message"  ta-disabled="true"/>
+<carousel interval="myInterval">
+  <slide ng-repeat="slide in slides" active="slide.active">
+    <a href="{{slide.link}}">
+    <img ng-src="{{slide.image}}">
+    </a>
+  </slide>
+ </carousel>
+ </div>

@@ -1,0 +1,64 @@
+<div>
+	<table class="table table-bordered table-hover table-condensed">
+		<tr style="font-weight: bold">
+			<td style="width:30%">Title</td>
+			<td style="width:10%">Format</td>
+			<td style="width:10%">Length</td>
+			<td style="width:10%">Release</td>
+			<td style="width:20%">Rating</td>
+			<td style="width:20%">Edit</td>
+		</tr>
+		<tr ng-repeat="movie in movies">
+			<td>
+				<!-- editable title (text with validation) -->
+				<span editable-text="movie.title" e-name="title" e-form="rowform" 
+					onbeforesave="checkTitle($data, movie.id)">
+					{{ movie.title || 'empty' }}
+				</span>
+			</td>
+			<td>
+				<!-- editable status (select-local) -->
+			    <span editable-select="movie.format" e-name="format" e-form="rowform" e-ng-options="s.value as s.text for s in formats">
+					{{showFormat(movie)}}
+				</span>
+			</td>
+			<td>
+				<!-- editable title (text with validation) -->
+				<span editable-text="movie.length" e-name="length" e-form="rowform" onbeforesave="checkLength($data, movie.id)">
+					{{ movie.length || 'empty' }}
+				</span>
+			</td>
+			<td>
+				<!-- editable title (text with validation) -->
+				<span editable-text="movie.releaseYear" e-name="releaseYear" e-form="rowform" onbeforesave="checkReleaseYear($data, movie.id)">
+					{{ movie.releaseYear || 'empty' }}
+				</span>
+			</td>
+			<td>
+				<!-- editable title (text with validation) -->
+				<span editable-text="movie.format" e-name="format" e-form="rowform" onbeforesave="checkTitle($data, movie.id)">
+					{{ movie.format || 'empty' }}
+				</span>
+			</td>
+			<td style="white-space: nowrap">
+				<!-- form -->
+				<form editable-form name="rowform" 
+					onbeforesave="saveMovie($data, movie.id)" ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == movie">
+					<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
+						save
+					</button>
+					<button type="button" ng-disabled="rowform.$waiting" ng-click="rowform.$cancel()" class="btn btn-default">
+						cancel
+					</button>
+				</form>
+				<div class="buttons" ng-show="!rowform.$visible">
+					<button type="button" class="btn btn-primary" ng-click="rowform.$show()">edit</button>
+					<button type="button" class="btn btn-danger" ng-click="removeUser($index)">del</button>
+				</div>  
+			</td>
+		</tr>
+	</table>
+
+	<button type="button" class="btn btn-default" ng-click="addMovie()">Add row</button>
+</div>
+
