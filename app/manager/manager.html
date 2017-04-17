@@ -46,7 +46,7 @@
 			<td>
 			
 				<!-- editable title (text with validation) -->
-				<span editable-text="movie.length" e-name="length" e-form="rowform" onbeforesave="checkLength($data, movie.id)">
+				<span editable-number="movie.length" e-name="length" e-form="rowform" onbeforesave="checkLength($data, movie.id)">
 					{{ movie.length || 'empty' }}
 				</span>
 			</td>
@@ -61,7 +61,7 @@
 				<span editable-radiolist="movie.rating" 
 					e-ng-options="s.value as s.text for s in ::ratings track by s.value"
 					onbeforesave="checkRating($data, movie.id)">
-					{{ showRating() }}
+					{{ showRating(movie) }}
 				</span>
 			</td>
 			<td style="white-space: nowrap">
