@@ -27,6 +27,7 @@ router.route('/movie')
    // First read existing movies.
      fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
          data = JSON.parse( data );
+          
 	      data["movie"+req.body.id] = req.body;
       console.log(data);   
           
@@ -35,16 +36,36 @@ router.route('/movie')
          
       })
 
-
-
-
-
-
+      if(!data.hasOwnProperty("movie"+req.body.id)){
+                  res.json({ message: 'movie ' + req.body.id + ' created!' });
+         }
+         else{
+               res.json({ message: 'movie ' + req.body.id + ' updated!' });
+         }
    });
-
-   res.json({ message: 'movie ' + req.body.id + ' created!' });
 });
+router.route('/movie')
+ .delete(function(req, res) {
+    console.log(req.body.id);    
+   // First read existing movies.
+     fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
+         data = JSON.parse( data );
+         delete data["movie"+req.body.id];  
+	   console.log(data);   
+          
+     fs.writeFile(__dirname + "/" + "movies.dat", JSON.stringify(data), function (err) {
+         if (err) return console.log(err);
+         
+      })
 
+      if(!data.hasOwnProperty("movie"+req.body.id)){
+                  res.json({ message: 'movie ' + req.body.id + ' deleted!' });
+         }
+         else{
+               res.json({ message: 'movie ' + req.body.id + ' could not be deleted!' });
+         }
+   });
+});
 
 
 
