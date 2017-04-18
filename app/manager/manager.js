@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp.manager', ['ngRoute','xeditable'])
+angular.module('myApp.manager', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/manager', {
     templateUrl: 'manager/manager.html',
@@ -38,21 +38,15 @@ angular.module('myApp.manager', ['ngRoute','xeditable'])
       }
       return selected.length ? selected[0].text : 'Not Set';
     };
-    $scope.showRating = function(movie) {
-      var selected = [];
-      if(movie.rating) {
-        selected = $filter('filter')($scope.ratings, {value: movie.rating});
-      }
-      return selected.length ? selected[0].text : 'Not Set';
-    };
+
     $scope.checkTitle = function(data, id) {
       if (data.length > 50) {
         return "Title is limited to 50 characters!";
       }
     };
     $scope.checkLength = function(data, id) {
-        if (data < 0 || data >=  500) {
-          return "Movie length must be between 0 and 500 minutes!";
+        if (data.length <  50) {
+          return "Title is limited to 50 characters!";
         }
     };
     $scope.checkReleaseYear = function(data, id) {
@@ -65,7 +59,7 @@ angular.module('myApp.manager', ['ngRoute','xeditable'])
     $scope.saveMovie = function(data, id) {
       //$scope.movies not updated yet
       angular.extend(data, {id: id});
-      //return $http.post('/saveMovie', data);
+      return $http.post('/saveMovie', data);
     };
 
     // remove user
