@@ -14,7 +14,7 @@ var port = process.env.PORT || 8082;
 // =============================================================================
 var router = express.Router();              // get an instance of the express Router
 router.get('/movies', function(req, res) {
-	 fs.readFile( __dirname + "/" + "movies.json", 'utf8', function (err, data) {
+	 fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
 			 console.log( data );
           res.end(data);
           //res.json({ message: data });   
@@ -25,12 +25,12 @@ router.route('/movie')
  .post(function(req, res) {
     console.log(req.body.id);    
    // First read existing movies.
-     fs.readFile( __dirname + "/" + "movies.json", 'utf8', function (err, data) {
+     fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
          data = JSON.parse( data );
 	      data["movie"+req.body.id] = req.body;
       console.log(data);   
           
-     fs.writeFile(__dirname + "/" + "movies.json", JSON.stringify(data), function (err) {
+     fs.writeFile(__dirname + "/" + "movies.dat", JSON.stringify(data), function (err) {
          if (err) return console.log(err);
          
       })
@@ -52,7 +52,7 @@ router.route('/movie')
 
 app.post('/movie', function (req, res) {
    // First read existing movies.
-   fs.readFile( __dirname + "/" + "movies.json", 'utf8', function (err, data) {
+   fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
    
        data = JSON.parse( data );
 	  
@@ -66,7 +66,7 @@ app.post('/movie', function (req, res) {
 
 app.delete('/movie/:id', function (req, res) {
    // First read existing users.
-   fs.readFile( __dirname + "/" + "movies.json", 'utf8', function (err, data) {
+   fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
        data = JSON.parse( data );
        delete data["movie" + req.params.id];
        console.log( data );
@@ -76,7 +76,7 @@ app.delete('/movie/:id', function (req, res) {
 
 app.get('/movie/:id', function (req, res) {
    // First read existing movies.
-   fs.readFile( __dirname + "/" + "movies.json", 'utf8', function (err, data) {
+   fs.readFile( __dirname + "/" + "movies.dat", 'utf8', function (err, data) {
        var movies = JSON.parse(data);
        var movie = movies["movie" + req.params.id] 
        console.log( movie );
